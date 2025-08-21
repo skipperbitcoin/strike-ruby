@@ -17,16 +17,19 @@ module Strike
       raise "STRIKE_API_KEY environment variable not set" unless @api_key
     end
 
-    def list_receives(params = {})
-      get("/receives", params)
+    def get_balances
+      get("/v1/balances")
     end
 
-    def create_invoice(amount, currency:, description: nil, due_date: nil, external_id: nil)
+    def list_receives(params = {})
+      get("/receive-requests/receives", params)
+    end
+
+    def create_invoice(amount, currency:, description: nil, due_date: nil, external_id:)
       payload = {
         amount: { currency: currency, amount: amount.to_s },
         description: description,
-        dueDate: due_date&.iso8601,
-        externalId: external_id
+        correlationId: external_id
       }.compact
 
       post("/invoices", payload)
@@ -36,7 +39,7 @@ module Strike
       get("/invoices/#{invoice_id}")
     end
 
-    def receive_payment(payment_id)
+    def get_payment(payment_id)
       get("/payments/#{payment_id}")
     end
 

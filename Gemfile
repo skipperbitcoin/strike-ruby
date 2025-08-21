@@ -7,6 +7,7 @@ ruby ">= 2.7.0"
 # Development dependencies only (end users don't need these)
 group :development do
   gem "bundler", ">= 2.2.0"
+  gem "faraday"
   gem "rake", "~> 13.0"
   gem "minitest", "~> 5.0"
   gem "webmock", "~> 3.0"

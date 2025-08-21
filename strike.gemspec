@@ -3,7 +3,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "strike/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "strike"
+  spec.name          = "strike_api"
   spec.version       = Strike::VERSION
   spec.authors       = ["Skipper Bitcoin"]
   spec.email         = ["btcsailor@protonmail.com"]
@@ -28,12 +28,12 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # Dependencies
-  spec.add_dependency "faraday", '~> 2.3'
-  spec.add_dependency "faraday-follow_redirects", "~> 0.3"
-  spec.add_dependency "activesupport", ">= 5.2" # For Rails compatibility
+  spec.add_runtime_dependency "faraday", '~> 2.3'
+  spec.add_runtime_dependency "faraday-follow_redirects", "~> 0.3"
+  spec.add_runtime_dependency "activesupport", "~> 5.2" # For Rails compatibility
 
   # Development dependencies
-  spec.add_development_dependency "bundler", ">= 2.0"
+  spec.add_development_dependency "bundler", "~> 2.0"
   spec.add_development_dependency "rake", "~> 13.0"
   spec.add_development_dependency "minitest", "~> 5.0"
   spec.add_development_dependency "webmock", "~> 3.0"
