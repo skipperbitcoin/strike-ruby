@@ -8,7 +8,7 @@ class ClientTest < Strike::Test
   end
 
   def test_create_invoice
-    stub_request(:post, "https://api.strike.me/invoices").
+    stub_request(:post, "https://api.strike.me/v1/invoices").
     with(
       body: "{\"amount\":{\"currency\":\"USD\",\"amount\":\"10.5\"},\"description\":\"Test invoice\",\"correlationId\":\"asnosankn\"}",
       headers: {
@@ -29,7 +29,7 @@ class ClientTest < Strike::Test
   end
 
   def test_list_receives
-    stub_request(:get, "https://api.strike.me/receive-requests/receives").
+    stub_request(:get, "https://api.strike.me/v1/receive-requests/receives").
     with(
       headers: {
         'Accept'=>'application/json',
