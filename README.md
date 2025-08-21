@@ -1,6 +1,6 @@
 # Strike Ruby Client
 
-[![Gem Version](https://badge.fury.io/rb/strike.svg)](https://badge.fury.io/rb/strike)
+[![Gem Version](https://badge.fury.io/rb/strike.svg)](https://badge.fury.io/rb/strike-api)
 
 
 A Ruby client for the [Strike API](https://docs.strike.me/api/) that makes it easy to integrate Bitcoin Lightning payments into your Ruby applications.
@@ -22,7 +22,7 @@ Create api key in [Strike Dashboard](https://dashboard.strike.me/api-keys)
 Add Strike Api Key to rails secrets:
 ```
 strike:
-  api_key: "your_api_key_here"
+  api_key: your_api_key_here
 ```
 
 ## Usage
