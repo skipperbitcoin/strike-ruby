@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # Dependencies
-  spec.add_dependency "faraday", "~> 2.7"
+  spec.add_dependency "faraday", '~> 2.3'
   spec.add_dependency "faraday-follow_redirects", "~> 0.3"
   spec.add_dependency "activesupport", ">= 5.2" # For Rails compatibility
 

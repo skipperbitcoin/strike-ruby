@@ -23,23 +23,32 @@ module Strike
     def fetch_rails_api_key
       return unless defined?(Rails) && Rails.application
 
-      # Try Rails 6+ credentials first
-      if Rails.application.respond_to?(:credentials) && Rails.application.credentials.dig(:strike, :api_key)
-        return Rails.application.credentials.dig(:strike, :api_key)
+      # Rails 6+ preferred pattern
+      if Rails.application.respond_to?(:credentials) && 
+         Rails.application.credentials.respond_to?(:dig)
+        
+        # Try structured credentials first (most secure)
+        if api_key = Rails.application.credentials.dig(:strike, :api_key)
+          return api_key
+        end
+        
+        # Try top-level key as fallback
+        if api_key = Rails.application.credentials.dig(:strike_api_key)
+          return api_key
+        end
       end
 
-      # Try Rails 5.2 secrets
-      if Rails.application.secrets.dig(:strike, :api_key)
-        return Rails.application.secrets.dig(:strike, :api_key)
-      end
-
-      # Fallback to top-level strike_api_key for legacy setups
-      if Rails.application.credentials.strike_api_key rescue nil
-        return Rails.application.credentials.strike_api_key
-      end
-
-      if Rails.application.secrets.strike_api_key rescue nil
-        return Rails.application.secrets.strike_api_key
+      # Rails 5.2 secrets
+      if Rails.application.respond_to?(:secrets) &&
+         Rails.application.secrets.respond_to?(:dig)
+        
+        if api_key = Rails.application.secrets.dig(:strike, :api_key)
+          return api_key
+        end
+        
+        if api_key = Rails.application.secrets.dig(:strike_api_key)
+          return api_key
+        end
       end
 
       nil
