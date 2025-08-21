@@ -3,7 +3,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "strike/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "strike_api"
+  spec.name          = "strike-api"
   spec.version       = Strike::VERSION
   spec.authors       = ["Skipper Bitcoin"]
   spec.email         = ["btcsailor@protonmail.com"]
