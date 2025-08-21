@@ -3,16 +3,22 @@ require "rails"
 
 module Strike
   class Railtie < Rails::Railtie
-    # Load VERY late in the Rails initialization process
-    initializer "strike.configure", after: :finisher_hook do |app|
-      # Verify Rails.application is fully available
-      if !defined?(Rails.application) || Rails.application.nil?
-        Rails.logger&.error("[STRIKE] Rails.application not available during initialization!")
-        next
+    initializer "strike.ensure_loaded", before: :finisher_hook, priority: :high do |app|
+      # Force require strike if not already loaded
+      unless defined?(Strike)
+        begin
+          require "strike"
+          Rails.logger.info("Strike gem manually required during Rails initialization")
+        rescue => e
+          Rails.logger.error("Failed to require Strike: #{e.message}")
+          raise "Strike gem failed to load: #{e.message}"
+        end
       end
-      
+    end
+
+    # Keep your existing configuration initializer
+    initializer "strike.configure", after: "strike.ensure_loaded" do |app|
       Strike.configure do |config|
-        # Safe credentials access
         config.api_key ||= begin
           creds = Rails.application.try(:credentials)
           secrets = Rails.application.try(:secrets)
@@ -24,8 +30,15 @@ module Strike
           end || ENV["STRIKE_API_KEY"]
         end
       end
+      
+      # Production safety check
+      if Rails.env.production? && Strike.configuration.api_key.nil?
+        raise "Strike API key not configured! " \
+              "Set STRIKE_API_KEY or configure in Rails credentials."
+      end
     end
 
+    # Keep your rake tasks
     rake_tasks do
       Dir[File.expand_path("../tasks/*.rake", __FILE__)].each { |f| load f }
     end
