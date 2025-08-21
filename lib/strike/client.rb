@@ -4,7 +4,7 @@ require "json"
 
 module Strike
   class Client
-    API_BASE = "https://api.strike.me/v1".freeze
+    API_BASE = "https://api.strike.me".freeze
     DEFAULT_HEADERS = {
       "Content-Type" => "application/json",
       "Accept" => "application/json" 
@@ -13,7 +13,7 @@ module Strike
     attr_accessor :api_key
 
     def initialize(api_key: nil)
-      @api_key = api_key || ENV["STRIKE_API_KEY"]
+      @api_key = api_key 
       raise "STRIKE_API_KEY environment variable not set" unless @api_key
     end
 
@@ -21,8 +21,8 @@ module Strike
       get("/v1/balances")
     end
 
-    def list_receives(params = {})
-      get("/receive-requests/receives", params)
+    def list_receives
+      get("/v1/receive-requests/receives")
     end
 
     def create_invoice(amount, currency:, description: nil, due_date: nil, external_id:)
@@ -32,15 +32,15 @@ module Strike
         correlationId: external_id
       }.compact
 
-      post("/invoices", payload)
+      post("/v1/invoices", payload)
     end
 
     def get_invoice(invoice_id)
-      get("/invoices/#{invoice_id}")
+      get("/v1/invoices/#{invoice_id}")
     end
 
     def get_payment(payment_id)
-      get("/payments/#{payment_id}")
+      get("/v1/payments/#{payment_id}")
     end
 
     private

@@ -1,10 +1,11 @@
-require "strike/version"
-require "strike/client"
-
-# For Rails integration
-if defined?(Rails)
-  require "strike/railtie"
+begin
+  require "logger"
+rescue LoadError
+  # Logger might already be loaded in some environments
 end
+
+require_relative "strike/version"
+require_relative "strike/client"
 
 module Strike
   class Configuration
@@ -73,5 +74,13 @@ module Strike
     def client
       @client ||= Client.new(api_key: configuration.api_key)
     end
+  end
+end
+
+if defined?(Rails)
+  begin
+    require_relative "strike/railtie"
+  rescue LoadError => e
+    Rails.logger&.error("[STRIKE] Failed to load Railtie: #{e.message}")
   end
 end

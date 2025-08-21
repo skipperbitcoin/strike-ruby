@@ -30,8 +30,7 @@ Gem::Specification.new do |spec|
   # Dependencies
   spec.add_runtime_dependency "faraday", '~> 2.3'
   spec.add_runtime_dependency "faraday-follow_redirects", "~> 0.3"
-  spec.add_runtime_dependency "activesupport", "~> 5.2" # For Rails compatibility
-
+  spec.add_runtime_dependency "activesupport", ">= 5.2", "< 8.0"
   # Development dependencies
   spec.add_development_dependency "bundler", "~> 2.0"
   spec.add_development_dependency "rake", "~> 13.0"
