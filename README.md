@@ -10,7 +10,7 @@ A Ruby client for the [Strike API](https://docs.strike.me/api/) that makes it ea
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'strike'
+gem 'strike-api'
 ```
 And then execute:
 ```
