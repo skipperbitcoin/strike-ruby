@@ -1,6 +1,6 @@
 require "minitest/autorun"
 require "webmock/minitest"
-require "strike"
+require "strike-api"
 
 class Strike::Test < Minitest::Test
   def setup

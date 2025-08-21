@@ -7,7 +7,7 @@ module Strike
       # Force require strike if not already loaded
       unless defined?(Strike)
         begin
-          require "strike"
+          require "strike-api"
           Rails.logger.info("Strike gem manually required during Rails initialization")
         rescue => e
           Rails.logger.error("Failed to require Strike: #{e.message}")
