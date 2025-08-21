@@ -43,11 +43,11 @@ module Strike
     private
 
     def connection
-      @connection ||= Faraday.new(url: API_BASE) do |conn|
-        conn.headers = DEFAULT_HEADERS,merge({ "Authorization" => "Bearer #{api_key}" })
-        conn.request :json
-        conn.response :json, content_type: /\bjson$/
-        conn.adapter Faraday.default_adapter
+      @connection ||= Faraday.new(url: API_BASE) do |connection|
+        connection.headers = DEFAULT_HEADERS,merge({ "Authorization" => "Bearer #{api_key}" })
+        connection.request :json
+        connection.response :json, content_type: /\bjson$/
+        connection.adapter Faraday.default_adapter
       end
     end
 
