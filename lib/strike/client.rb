@@ -7,7 +7,7 @@ module Strike
     API_BASE = "https://api.strike.me/v1".freeze
     DEFAULT_HEADERS = {
       "Content-Type" => "application/json",
-      "Accept" => "application/json"
+      "Accept" => "application/json" 
     }.freeze
 
     attr_accessor :api_key
@@ -44,8 +44,7 @@ module Strike
 
     def connection
       @connection ||= Faraday.new(url: API_BASE) do |conn|
-        conn.headers = DEFAULT_HEADERS
-        conn.basic_auth(@api_key, "")
+        conn.headers = DEFAULT_HEADERS,merge({ "Authorization" => "Bearer #{api_key}" })
         conn.request :json
         conn.response :json, content_type: /\bjson$/
         conn.adapter Faraday.default_adapter
